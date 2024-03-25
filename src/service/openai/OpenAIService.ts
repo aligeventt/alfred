@@ -40,6 +40,18 @@ export class OpenAIService {
 
   private prompt = (pullRequest: any, diff: string) => {
     return `Create a pull request review for the following pull request:
+                - Give the response in the following JSON format: {"review": ["line": "1", "comment": "This is a comment}"]}
+
+                Instructions:
+                - Review the pull request
+                - Provide feedback
+                - Do not provide positive comments or positive feedback
+                - Provide constructive feedback
+                
+                - Follow Clean Code Principles
+                
+                Review the following pull request:
+                
                 ## Pull Request Title: ${pullRequest.title}
                 ## Pull Request Description: ${pullRequest.description}
                 ## Pull Request Number: ${pullRequest.number}
@@ -50,14 +62,6 @@ export class OpenAIService {
                 \`\`\`
                 ${diff}
                 \`\`\`
-
-                Instructions:
-                - Review the pull request
-                - Provide feedback
-                - Do not provide positive comments or positive feedback
-                - Provide constructive feedback
-                - Give the response in the following JSON format: {"review": ["line": "1", "comment": "This is a comment}"]}
-                - Follow Clean Code Principles
                 `;
   };
 }
