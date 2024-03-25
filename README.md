@@ -23,3 +23,4 @@ Stay tuned for updates as we implement these features! Contributions and suggest
 ## Getting Started
 
 To get started with our GitHub Actions bot, follow these simple steps:
+Node Version: v20.11.1
