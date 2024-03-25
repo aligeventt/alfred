@@ -15,11 +15,13 @@
     "typescript": "^5.4.3"
   },
   "devDependencies": {
+    "prettier": "^3.2.5",
     "ts-node": "^10.9.2"
   },
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/main.js",
-    "dev": "ts-node src/main.ts"
+    "package": "ncc build --source-map --license licenses.txt",
+    "format": "prettier --write .",
+    "lint": "prettier --check ."
   }
 }
