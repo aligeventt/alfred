@@ -3,15 +3,15 @@ import { GithubService } from "./service/github/GithubService";
 import { OpenAIService } from "./service/openai/OpenAIService";
 import parseDiff from "parse-diff";
 import { Comment } from "./model/mapper/Comment";
-import {readFileSync} from "fs";
-import {minimatch} from "minimatch";
+import { readFileSync } from "fs";
+import { minimatch } from "minimatch";
 
 async function main() {
   const githubService = new GithubService();
   const openAIService = new OpenAIService();
 
   const { repository, number } = JSON.parse(
-      readFileSync(process.env.GITHUB_EVENT_PATH || "", "utf8")
+    readFileSync(process.env.GITHUB_EVENT_PATH || "", "utf8"),
   );
   const owner = repository.owner.login;
   const repo = repository.name;
