@@ -2,9 +2,9 @@ import * as core from "@actions/core";
 import { GithubService } from "./service/github/GithubService";
 import { OpenAIService } from "./service/openai/OpenAIService";
 import parseDiff from "parse-diff";
-import minimatch from "minimatch";
 import { Comment } from "./model/mapper/Comment";
 import {readFileSync} from "fs";
+import {minimatch} from "minimatch";
 
 async function main() {
   const githubService = new GithubService();
@@ -28,7 +28,7 @@ async function main() {
 
   const filteredDiff = parsedDiff.filter((file) => {
     return !excludePatterns.some((pattern) => {
-      minimatch.minimatch(file.to ?? "", pattern);
+      minimatch(file,pattern)
     });
   });
 
