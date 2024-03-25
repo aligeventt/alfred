@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/main.ts",
+    "start": "node dist/main.js",
     "format": "prettier --write .",
     "lint": "prettier --check ."
   }
