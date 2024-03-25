@@ -1,10 +1,10 @@
 import { OpenAI } from "openai";
 import * as core from "@actions/core";
 import { ReviewComment } from "../../model/ReviewComment";
-const OPENAI_API_KEY = core.getInput("OPENAI_API_KEY");
 export class OpenAIService {
   private readonly openAI: OpenAI;
   constructor() {
+    const OPENAI_API_KEY = core.getInput("OPENAI_API_KEY");
     console.log("OpenAI API:, ", OPENAI_API_KEY);
     this.openAI = new OpenAI({
       apiKey: OPENAI_API_KEY,
