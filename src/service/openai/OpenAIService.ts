@@ -55,7 +55,7 @@ export class OpenAIService {
                 - Provide feedback
                 - Do not provide positive comments or positive feedback
                 - Provide constructive feedback
-                - Give the response in the given JSON format: {"review": ["line": "<number>", "comment": "<comment>}"]}
+                - Give the response in the following JSON format: {"review": ["line": "1", "comment": "This is a comment}"]}
                 - Follow Clean Code Principles
                 `;
   };
