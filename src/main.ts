@@ -4,14 +4,16 @@ import { OpenAIService } from "./service/openai/OpenAIService";
 import parseDiff from "parse-diff";
 import minimatch from "minimatch";
 import { Comment } from "./model/mapper/Comment";
+import {readFileSync} from "fs";
 
 async function main() {
   const githubService = new GithubService();
   const openAIService = new OpenAIService();
 
-  const repository = process.env.GITHUB_REPOSITORY ?? "";
+  const { repository, number } = JSON.parse(
+      readFileSync(process.env.GITHUB_EVENT_PATH || "", "utf8")
+  );
   const [owner, repo] = repository.split("/");
-  const number = parseInt(process.env.PULL_REQUEST_NUMBER || "");
   const pullRequest = await githubService.getPullRequest(owner, repo, number);
 
   const parsedDiff = parseDiff(
