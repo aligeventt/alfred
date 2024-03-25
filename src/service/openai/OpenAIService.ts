@@ -28,6 +28,7 @@ export class OpenAIService {
 
     if (response.choices.length > 0) {
       try {
+        console.log(response.choices[0].message?.content?.trim());
         return JSON.parse(response.choices[0].message?.content?.trim() || "{}")
           .review as Array<ReviewComment>;
       } catch (error) {
