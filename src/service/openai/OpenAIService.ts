@@ -13,6 +13,7 @@ export class OpenAIService {
 
   createPullRequestReview = async (pullRequest: any, diff: string) => {
     const prompt = this.prompt(pullRequest, diff);
+    console.log("Prompt: ", prompt);
     const response = await this.openAI.chat.completions.create({
       model: "gpt-3.5-turbo",
       max_tokens: 100,
