@@ -4,7 +4,7 @@ import { ReviewComment } from "../../model/ReviewComment";
 export class OpenAIService {
   private readonly openAI: OpenAI;
   constructor() {
-    const OPENAI_API_KEY = core.getInput("OPENAI_API_KEY");
+    const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
     console.log("OpenAI API:, ", OPENAI_API_KEY);
     this.openAI = new OpenAI({
       apiKey: OPENAI_API_KEY,

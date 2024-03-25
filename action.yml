@@ -22,6 +22,10 @@ runs:
       shell: bash
     - run: yarn --cwd ${{ github.action_path }} start
       shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        OPENAI_API_KEY: ${{ inputs.OPENAI_API_KEY }}
+        exclude: ${{ inputs.exclude }}
 
 branding:
   icon: "aperture"
