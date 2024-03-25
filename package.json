@@ -1,12 +1,17 @@
 {
   "name": "alfred",
   "version": "1.0.0",
-  "main": "src/app.ts",
+  "main": "src/main.ts",
   "repository": "https://github.com/tooltime2019/alfred.git",
   "author": "aligeventt <ali.geven@tooltime.de>",
   "license": "MIT",
   "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@octokit/rest": "^20.0.2",
     "@types/node": "^20.11.30",
+    "minimatch": "^9.0.3",
+    "openai": "^4.29.2",
+    "parse-diff": "^0.11.1",
     "typescript": "^5.4.3"
   },
   "devDependencies": {
@@ -15,6 +20,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./bin/app.js",
-    "dev": "ts-node ./src/app.ts"
-  }
+    "dev": "ts-node src/main.ts"
+  },
+  "type": "module"
 }
