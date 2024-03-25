@@ -13,7 +13,8 @@ async function main() {
   const { repository, number } = JSON.parse(
       readFileSync(process.env.GITHUB_EVENT_PATH || "", "utf8")
   );
-  const [owner, repo] = repository.split("/");
+  const owner = repository.owner.login;
+  const repo = repository.name;
   const pullRequest = await githubService.getPullRequest(owner, repo, number);
 
   const parsedDiff = parseDiff(
