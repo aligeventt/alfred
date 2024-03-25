@@ -19,8 +19,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node ./bin/app.js",
+    "start": "node ./dist/main.js",
     "dev": "ts-node src/main.ts"
-  },
-  "type": "module"
+  }
 }

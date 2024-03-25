@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import {GithubService} from "./service/github/GithubService";
 import {OpenAIService} from "./service/openai/OpenAIService";
-import parseDiff, { Chunk, File } from "parse-diff";
+import parseDiff from "parse-diff";
 import minimatch from "minimatch";
 import {Comment} from "./model/mapper/Comment";
 
@@ -54,4 +54,9 @@ async function main() {
     }
     await githubService.createComment(owner, repo, number, comments);
 }
+
+main().catch((error) => {
+    console.error("Error:", error);
+    process.exit(1);
+});
 

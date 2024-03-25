@@ -1,0 +1,19 @@
+name: "Alfred Action"
+description: "An action to generate a summary of the changes in a pull request using OpenAI's GPT."
+inputs:
+  GITHUB_TOKEN:
+    description: "GitHub token to access the repository."
+    required: true
+  OPENAI_API_KEY:
+    description: "OpenAI API key to access the GPT-3 API."
+    required: true
+  exclude:
+    description: "Glob patterns to exclude files from the diff analysis"
+    required: false
+    default: ""
+runs:
+  using: "node20"
+  main: "lib/main.js"
+branding:
+  icon: "aperture"
+  color: "green"
