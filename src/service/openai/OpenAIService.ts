@@ -16,9 +16,11 @@ export class OpenAIService {
     console.log("Prompt: ", prompt);
     const response = await this.openAI.chat.completions.create({
       model: "gpt-3.5-turbo",
-      max_tokens: 100,
-      n: 1,
-      stop: "\n",
+      temperature: 0.2,
+      max_tokens: 700,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
       messages: [
         {
           role: "system",
@@ -30,7 +32,7 @@ export class OpenAIService {
     if (response.choices.length > 0) {
       try {
         console.log("RESPONSE: ", response.choices[0].message?.content);
-        return JSON.parse(response.choices[0].message?.content?.trim() || "{}")
+        return JSON.parse(response.choices[0].message.content?.trim() || "")
           .review as Array<ReviewComment>;
       } catch (error) {
         throw new Error(`Error parsing response from OpenAI: ${error}`);
@@ -40,8 +42,6 @@ export class OpenAIService {
 
   private prompt = (pullRequest: any, diff: string) => {
     return `Create a pull request review for the following pull request:
-                - Give the response in the following JSON format: {"review": ["line": "1", "comment": "This is a comment}"]}
-
                 Instructions:
                 - Review the pull request
                 - Provide feedback
