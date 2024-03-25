@@ -1,4 +1,3 @@
-import * as core from "@actions/core";
 import { PullRequest } from "../../model/PullRequest";
 import { mapPullRequest } from "../../model/mapper/PullRequest.mapper";
 import { Octokit } from "@octokit/rest";
