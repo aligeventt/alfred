@@ -9,6 +9,7 @@ node_modules/
 # Ignore any build output directories
 build/
 bin/
+dist/
 
 # Ignore any local development environment configuration files
 .env
