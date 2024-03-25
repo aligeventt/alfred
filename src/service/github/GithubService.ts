@@ -4,7 +4,7 @@ import { mapPullRequest } from "../../model/mapper/PullRequest.mapper";
 import { Octokit } from "@octokit/rest";
 import { Comment } from "../../model/mapper/Comment";
 
-const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 const octokit = new Octokit({
   auth: GITHUB_TOKEN,
