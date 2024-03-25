@@ -1,5 +1,4 @@
 import { OpenAI } from "openai";
-import * as core from "@actions/core";
 import { ReviewComment } from "../../model/ReviewComment";
 export class OpenAIService {
   private readonly openAI: OpenAI;
@@ -43,6 +42,7 @@ export class OpenAIService {
   private prompt = (pullRequest: any, diff: string) => {
     return `Create a pull request review for the following pull request:
                 Instructions:
+                - Provide the response in following JSON format:  {"reviews": [{"lineNumber": "1", "reviewComment": "This is a comment"}]}
                 - Review the pull request
                 - Provide feedback
                 - Do not provide positive comments or positive feedback
