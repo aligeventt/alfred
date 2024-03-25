@@ -13,17 +13,22 @@ export class OpenAIService {
 
   createPullRequestReview = async (pullRequest: any, diff: string) => {
     const prompt = this.prompt(pullRequest, diff);
-    const response = await this.openAI.completions.create({
+    const response = await this.openAI.chat.completions.create({
       model: "gpt-3.5-turbo",
       max_tokens: 100,
       n: 1,
       stop: "\n",
-      prompt,
+      messages: [
+        {
+          role: "system",
+          content: prompt,
+        },
+      ],
     });
 
     if (response.choices.length > 0) {
       try {
-        return JSON.parse(response.choices[0].text)
+        return JSON.parse(response.choices[0].message?.content?.trim() || "{}")
           .review as Array<ReviewComment>;
       } catch (error) {
         throw new Error(`Error parsing response from OpenAI: ${error}`);
