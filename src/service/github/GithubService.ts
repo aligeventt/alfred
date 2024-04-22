@@ -57,7 +57,7 @@ export class GithubService {
         comments: comments.map((comment) => {
           return {
             path: comment.path,
-            position: parseInt(comment.line.toString()),
+            position: parseInt(comment.line.toString()) +1,
             body: comment.body,
           };
         }),

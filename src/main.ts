@@ -74,7 +74,7 @@ async function main() {
         console.log();
         comments.push({
           path: file.to,
-          line: reviewComment.lineNumber +1,
+          line: reviewComment.lineNumber,
           body: reviewComment.reviewComment,
         });
       });
