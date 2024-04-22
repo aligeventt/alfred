@@ -71,9 +71,11 @@ export class OpenAIService {
     }
   };
 
-  createPullRequestDescription = async (pullRequest: PullRequest, diff: string) => {
+  createPullRequestDescription = async (
+    pullRequest: PullRequest,
+    diff: string,
+  ) => {
     const prompt = this.prDescriptionPrompt(pullRequest, diff);
-    console.log("Prompt: ", prompt);
     const response = await this.openAI.chat.completions.create({
       model: "gpt-3.5-turbo",
       temperature: 0.2,
@@ -97,7 +99,7 @@ export class OpenAIService {
         throw new Error(`Error parsing response from OpenAI: ${error}`);
       }
     }
-  }
+  };
 
   private prReviewPrompt = (pullRequest: PullRequest, diff: string) => {
     return `Create a pull request review for the following pull request:

@@ -72,4 +72,29 @@ export class GithubService {
         },
       );
   };
+
+  updatePullRequest = async (
+    owner: string,
+    repo: string,
+    number: number,
+    title: string,
+    body: string,
+  ): Promise<void> => {
+    await octokit.pulls
+      .update({
+        owner,
+        repo,
+        pull_number: number,
+        title,
+        body,
+      })
+      .then(
+        (response) => {
+          console.log("Pull request updated: ", response);
+        },
+        (error) => {
+          console.error("Error updating pull request: ", error);
+        },
+      );
+  };
 }

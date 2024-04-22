@@ -80,6 +80,11 @@ async function main() {
       );
 
       console.log("PR Description: ", prDescription);
+      if (!prDescription) {
+        console.log("PR Description not found");
+        return [];
+      }
+      await githubService.updatePullRequest(owner, repo, number, pullRequest.title,  prDescription);
     }
   }
 
