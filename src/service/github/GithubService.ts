@@ -46,13 +46,13 @@ export class GithubService {
   createComment = async (
     owner: string,
     repo: string,
-    number: number,
+    pull_number: number,
     comments: Array<Comment>,
   ): Promise<void> => {
     await octokit.pulls.createReview({
       owner,
       repo,
-      pull_number: number,
+      pull_number,
       comments: comments.map((comment) => {
         return {
           path: comment.path,
@@ -60,6 +60,7 @@ export class GithubService {
           body: comment.body,
         };
       }),
+      event: "COMMENT",
     });
-  };
+
 }
