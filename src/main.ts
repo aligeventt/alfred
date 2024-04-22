@@ -46,9 +46,14 @@ async function main() {
       const review = await openAIService.createPullRequestReview(
         pullRequest,
         prDiff,
+      ).then(
+        (review) => {
+          console.log("Review: ", review)
+          return review;
+        },
       ).catch((error) => {
         console.error("Error creating pull request review: ", error);
-        return [];
+        return undefined;
       });
 
       if (!review) {
