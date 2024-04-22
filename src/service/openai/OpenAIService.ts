@@ -31,7 +31,9 @@ export class OpenAIService {
     if (response.choices.length > 0) {
       try {
         console.log("RESPONSE: ", response.choices[0].message?.content);
-        const parsedJson  = JSON.parse(response.choices[0].message?.content?.trim() || "").review as Array<ReviewComment>;
+        const parsedJson = JSON.parse(
+          response.choices[0].message?.content?.trim() || "",
+        ).review as Array<ReviewComment>;
         console.log("Parsed JSON: ", parsedJson);
         return parsedJson;
       } catch (error) {
@@ -66,7 +68,7 @@ export class OpenAIService {
         throw new Error(`Error parsing response from OpenAI: ${error}`);
       }
     }
-  }
+  };
 
   private prReviewPrompt = (pullRequest: any, diff: string) => {
     return `Create a pull request review for the following pull request:
@@ -106,6 +108,5 @@ export class OpenAIService {
             - Add relevant test cases in 'it' blocks
             - Add relevant setup and teardown code in 'beforeEach' and 'afterEach' blocks
     `;
-
-  }
+  };
 }

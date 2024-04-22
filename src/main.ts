@@ -16,7 +16,7 @@ async function main() {
   const owner = repository.owner.login;
   const repo = repository.name;
   const pullRequest = await githubService.getPullRequest(owner, repo, number);
-  console.log("Pull Request: ", pullRequest)
+  console.log("Pull Request: ", pullRequest);
 
   const parsedDiff = parseDiff(
     await githubService.getPullRequestDiff(owner, repo, number),
@@ -35,7 +35,7 @@ async function main() {
 
   const comments: Comment[] = [];
   for (const file of filteredDiff) {
-    console.log("File: ", file.to)
+    console.log("File: ", file.to);
     if (file.to === "/dev/null") continue;
     for (const chunk of file.chunks) {
       const prDiff = await githubService.getPullRequestDiff(
@@ -43,32 +43,30 @@ async function main() {
         repo,
         number,
       );
-      const review = await openAIService.createPullRequestReview(
-        pullRequest,
-        prDiff,
-      ).then(
-        (review) => {
-          console.log("Review: ", review)
+      const review = await openAIService
+        .createPullRequestReview(pullRequest, prDiff)
+        .then((review) => {
+          console.log("Review: ", review);
           return review;
-        },
-      ).catch((error) => {
-        console.error("Error creating pull request review: ", error);
-        return undefined;
-      });
+        })
+        .catch((error) => {
+          console.error("Error creating pull request review: ", error);
+          return undefined;
+        });
 
       if (!review) {
-        console.log("Review not found")
+        console.log("Review not found");
         return [];
       }
 
       review.forEach((reviewComment) => {
-        console.log("Review Comment: ", reviewComment)
+        console.log("Review Comment: ", reviewComment);
         if (!file.to) {
-          console.log("File path not found")
+          console.log("File path not found");
           return [];
         }
-        console.log("File path: ", file.to)
-        console.log()
+        console.log("File path: ", file.to);
+        console.log();
         comments.push({
           path: file.to,
           line: reviewComment.lineNumber,
@@ -81,8 +79,8 @@ async function main() {
   console.log("Comments: ", comments);
   await githubService.createComment(owner, repo, number, comments);
 
-    const unitTest = await openAIService.createUnitTest("src/main.ts", "jest");
-    console.log("Unit Test: ", unitTest);
+  const unitTest = await openAIService.createUnitTest("src/main.ts", "jest");
+  console.log("Unit Test: ", unitTest);
 }
 
 main().catch((error) => {

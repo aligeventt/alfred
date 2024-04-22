@@ -49,26 +49,27 @@ export class GithubService {
     pull_number: number,
     comments: Array<Comment>,
   ): Promise<void> => {
-    await octokit.pulls.createReview({
-      owner,
-      repo,
-      pull_number,
-      comments: comments.map((comment) => {
-        return {
-          path: comment.path,
-          position: parseInt(comment.line.toString()),
-          body: comment.body,
-        };
-      }),
-      event: "COMMENT",
-    }).then(
+    await octokit.pulls
+      .createReview({
+        owner,
+        repo,
+        pull_number,
+        comments: comments.map((comment) => {
+          return {
+            path: comment.path,
+            position: parseInt(comment.line.toString()),
+            body: comment.body,
+          };
+        }),
+        event: "COMMENT",
+      })
+      .then(
         (response) => {
-            console.log("Comment created: ", response);
+          console.log("Comment created: ", response);
         },
         (error) => {
-            console.error("Error creating comment: ", error);
+          console.error("Error creating comment: ", error);
         },
-    );
-  }
-
+      );
+  };
 }
