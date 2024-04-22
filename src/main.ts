@@ -71,11 +71,13 @@ async function main() {
       });
 
       if (file.to && (file.to?.endsWith(".ts") || file.to?.endsWith(".js"))) {
+        console.log("Creating unit test for file: ", file.to)
         const unitTest = await openAIService.createUnitTest(file.to, "jest");
         if (unitTest) {
+          console.log("Unit Test: ", unitTest);
           comments.push({
             path: file.to,
-            line: 0,
+            line: 1,
             body: unitTest,
           });
         }
