@@ -97,4 +97,37 @@ export class GithubService {
         },
       );
   };
+
+  deletePreviousReviewComments = async (
+    owner: string,
+    repo: string,
+    pull_number: number,
+  ): Promise<void> => {
+    await octokit.pulls
+      .listReviewComments({
+        owner,
+        repo,
+        pull_number,
+      })
+      .then(
+        async (response) => {
+          console.log("Review comments: ", response.data);
+          await Promise.all(
+            response.data.map(async (comment) => {
+              if (comment.user.login === "github-actions[bot]") {
+                console.log("Deleting comment: ", comment.id);
+                await octokit.pulls.deleteReviewComment({
+                  owner,
+                  repo,
+                  comment_id: comment.id,
+                });
+              }
+            }),
+          );
+        },
+        (error) => {
+          console.error("Error listing review comments: ", error);
+        },
+      );
+  };
 }

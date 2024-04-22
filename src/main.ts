@@ -18,6 +18,15 @@ async function main() {
   const pullRequest = await githubService.getPullRequest(owner, repo, number);
   console.log("Pull Request: ", pullRequest);
 
+  await githubService
+    .deletePreviousReviewComments(owner, repo, number)
+    .then(() => {
+      console.log("Previous review comments deleted");
+    })
+    .catch((error) => {
+      console.error("Error deleting previous review comments: ", error);
+    });
+
   const parsedDiff = parseDiff(
     await githubService.getPullRequestDiff(owner, repo, number),
   );
@@ -71,7 +80,7 @@ async function main() {
       });
 
       if (file.to && (file.to?.endsWith(".ts") || file.to?.endsWith(".js"))) {
-        console.log("Creating unit test for file: ", file.to)
+        console.log("Creating unit test for file: ", file.to);
         const unitTest = await openAIService.createUnitTest(file.to, "jest");
         if (unitTest) {
           console.log("Unit Test: ", unitTest);
