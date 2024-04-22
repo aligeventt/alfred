@@ -110,6 +110,13 @@ async function main() {
     number,
     pullRequest.title,
     prDescription,
+  ).then(
+    (response) => {
+      console.log("Pull request updated: ", response);
+    },
+    (error) => {
+      console.error("Error updating pull request: ", error);
+    },
   );
 
   console.log("Comments: ", comments);
