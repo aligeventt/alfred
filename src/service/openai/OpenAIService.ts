@@ -144,20 +144,18 @@ export class OpenAIService {
   private prDescriptionPrompt = (pullRequest: PullRequest, diff: string) => {
     return `Create a pull request description for the following pull request:
                 Instructions:
-                - Provide the response in following JSON format:  {description: "This is a description"}
                 - Provide a description for the pull request
                 - Provide a detailed description of the changes
                 - Use Markdown for formatting for the description string
                 
-                Pull Request information pull request:
-                
+                Pull Request information pull request to describe:
                 ## Pull Request Title: ${pullRequest.title}
                 ## Pull Request Description: ${pullRequest.description}
                 ## Pull Request Number: ${pullRequest.number}
                 ## Pull Request Owner: ${pullRequest.owner}
                 ## Pull Request Name: ${pullRequest.name}
                 
-                Code diff to review:
+                Code diff to describe for the pull request description:
                 \`\`\`
                 ${diff}
                 \`\`\``;

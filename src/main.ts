@@ -75,16 +75,22 @@ async function main() {
       });
 
       const prDescription = await openAIService.createPullRequestDescription(
-          pullRequest,
-          prDiff,
+        pullRequest,
+        prDiff,
       );
 
       console.log("PR Description: ", prDescription);
       if (!prDescription) {
         console.log("PR Description not found");
-        return [];
+        return;
       }
-      await githubService.updatePullRequest(owner, repo, number, pullRequest.title,  prDescription);
+      await githubService.updatePullRequest(
+        owner,
+        repo,
+        number,
+        pullRequest.title,
+        prDescription,
+      );
     }
   }
 
