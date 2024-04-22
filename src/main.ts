@@ -35,6 +35,7 @@ async function main() {
 
   const comments: Comment[] = [];
   for (const file of filteredDiff) {
+    console.log("File: ", file)
     if (file.to === "/dev/null") continue;
     for (const chunk of file.chunks) {
       const prDiff = await githubService.getPullRequestDiff(
@@ -42,35 +43,30 @@ async function main() {
         repo,
         number,
       );
-      await openAIService.createPullRequestReview(
+      const review = await openAIService.createPullRequestReview(
         pullRequest,
         prDiff,
-      ).then(
-        (review) => {
-          if (!review) {
-            console.error("Review not found");
-            return [];
-          }
-          review.forEach((reviewComment) => {
-            console.log("Review Comment: ", reviewComment)
-            if (!file.to) {
-              console.log("File path not found")
-              return [];
-            }
-            console.log("File path: ", file.to)
-            console.log("Review Comment: ", reviewComment.comment)
-            comments.push({
-              path: file.to,
-              line: reviewComment.line,
-              body: reviewComment.comment,
-            });
-          });
-        },
-        (error) => {
-          console.error("Error creating review: ", error);
+      );
+
+      if (!review) {
+        console.log("Review not found")
+        return [];
+      }
+
+      review.forEach((reviewComment) => {
+        console.log("Review Comment: ", reviewComment)
+        if (!file.to) {
+          console.log("File path not found")
           return [];
-        },
-        );
+        }
+        console.log("File path: ", file.to)
+        console.log()
+        comments.push({
+          path: file.to,
+          line: reviewComment.line,
+          body: reviewComment.comment,
+        });
+      });
     }
   }
 
