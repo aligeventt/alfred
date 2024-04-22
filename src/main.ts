@@ -60,14 +60,9 @@ async function main() {
       }
     }
   }
-  await githubService.createComment(owner, repo, number, comments).then(
-    () => {
-      console.log("Comment created successfully");
-    },
-    (error) => {
-      console.error("Error creating comment: ", error);
-    }
-  );
+
+  console.log("Comments: ", comments);
+  await githubService.createComment(owner, repo, number, comments);
 }
 
 main().catch((error) => {

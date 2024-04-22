@@ -61,7 +61,14 @@ export class GithubService {
         };
       }),
       event: "COMMENT",
-    });
+    }).then(
+        (response) => {
+            console.log("Comment created: ", response);
+        },
+        (error) => {
+            console.error("Error creating comment: ", error);
+        },
+    );
   }
 
 }
