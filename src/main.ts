@@ -35,7 +35,7 @@ async function main() {
 
   const comments: Comment[] = [];
   for (const file of filteredDiff) {
-    console.log("File: ", file)
+    console.log("File: ", file.to)
     if (file.to === "/dev/null") continue;
     for (const chunk of file.chunks) {
       const prDiff = await githubService.getPullRequestDiff(
@@ -46,7 +46,10 @@ async function main() {
       const review = await openAIService.createPullRequestReview(
         pullRequest,
         prDiff,
-      );
+      ).catch((error) => {
+        console.error("Error creating pull request review: ", error);
+        return [];
+      });
 
       if (!review) {
         console.log("Review not found")
