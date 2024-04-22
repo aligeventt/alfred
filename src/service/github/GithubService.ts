@@ -62,5 +62,6 @@ export class GithubService {
       }),
       event: "COMMENT",
     });
+  }
 
 }
