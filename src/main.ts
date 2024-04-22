@@ -73,6 +73,13 @@ async function main() {
           body: reviewComment.reviewComment,
         });
       });
+
+      const prDescription = await openAIService.createPullRequestDescription(
+          pullRequest,
+          prDiff,
+      );
+
+      console.log("PR Description: ", prDescription);
     }
   }
 
