@@ -34,6 +34,7 @@ export class OpenAIService {
         const parsedJson  = JSON.parse(response.choices[0].message?.content?.trim() || "")
           .review as Array<ReviewComment>;
         console.log("Parsed JSON: ", parsedJson);
+        return parsedJson;
       } catch (error) {
         throw new Error(`Error parsing response from OpenAI: ${error}`);
       }
