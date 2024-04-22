@@ -47,6 +47,10 @@ async function main() {
         prDiff,
       ).then(
         (review) => {
+          if (!review) {
+            console.error("Review not found");
+            return [];
+          }
           review.forEach((reviewComment) => {
             console.log("Review Comment: ", reviewComment)
             if (!file.to) {
