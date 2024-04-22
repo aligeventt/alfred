@@ -11,7 +11,7 @@ export class OpenAIService {
   }
 
   createPullRequestReview = async (pullRequest: any, diff: string) => {
-    const prompt = this.prompt(pullRequest, diff);
+    const prompt = this.prReviewPrompt(pullRequest, diff);
     console.log("Prompt: ", prompt);
     const response = await this.openAI.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -40,7 +40,7 @@ export class OpenAIService {
     }
   };
 
-  private prompt = (pullRequest: any, diff: string) => {
+  private prReviewPrompt = (pullRequest: any, diff: string) => {
     return `Create a pull request review for the following pull request:
                 Instructions:
                 - Provide the response in following JSON format:  {review: [{"lineNumber": "1", "reviewComment": "This is a comment"}]}
