@@ -71,8 +71,8 @@ async function main() {
         console.log()
         comments.push({
           path: file.to,
-          line: reviewComment.line,
-          body: reviewComment.comment,
+          line: reviewComment.lineNumber,
+          body: reviewComment.reviewComment,
         });
       });
     }

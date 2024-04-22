@@ -1,4 +1,4 @@
 export interface ReviewComment {
-  comment: string;
-  line: number;
+  reviewComment: string;
+  lineNumber: number;
 }
