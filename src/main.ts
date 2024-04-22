@@ -32,17 +32,13 @@ async function main() {
       minimatch(file.to ?? "", pattern);
     });
   });
+  const prDiff = await githubService.getPullRequestDiff(owner, repo, number);
 
   const comments: Comment[] = [];
   for (const file of filteredDiff) {
     console.log("File: ", file.to);
     if (file.to === "/dev/null") continue;
     for (const chunk of file.chunks) {
-      const prDiff = await githubService.getPullRequestDiff(
-        owner,
-        repo,
-        number,
-      );
       const review = await openAIService
         .createPullRequestReview(pullRequest, prDiff)
         .then((review) => {
@@ -74,31 +70,39 @@ async function main() {
         });
       });
 
-      const prDescription = await openAIService.createPullRequestDescription(
-        pullRequest,
-        prDiff,
-      );
-
-      console.log("PR Description: ", prDescription);
-      if (!prDescription) {
-        console.log("PR Description not found");
-        return;
+      if (file.to && (file.to?.endsWith(".ts") || file.to?.endsWith(".js"))) {
+        const unitTest = await openAIService.createUnitTest(file.to, "jest");
+        if (unitTest) {
+          comments.push({
+            path: file.to,
+            line: 0,
+            body: unitTest,
+          });
+        }
       }
-      await githubService.updatePullRequest(
-        owner,
-        repo,
-        number,
-        pullRequest.title,
-        prDescription,
-      );
     }
   }
 
+  const prDescription = await openAIService.createPullRequestDescription(
+    pullRequest,
+    prDiff,
+  );
+
+  console.log("PR Description: ", prDescription);
+  if (!prDescription) {
+    console.log("PR Description not found");
+    return;
+  }
+  await githubService.updatePullRequest(
+    owner,
+    repo,
+    number,
+    pullRequest.title,
+    prDescription,
+  );
+
   console.log("Comments: ", comments);
   await githubService.createComment(owner, repo, number, comments);
-
-  const unitTest = await openAIService.createUnitTest("src/main.ts", "jest");
-  console.log("Unit Test: ", unitTest);
 }
 
 main().catch((error) => {

@@ -147,10 +147,10 @@ export class OpenAIService {
                 - Provide a description for the pull request
                 - Provide a detailed description of the changes
                 - Use Markdown for formatting for the description string
+                - The description should be concise and informative amd human readable and understandable
                 - Use the following format for the description:
-                    - Summary 
+                    - Summary
                     - List of changes
-                    - Refactoring Targets
                 
                 Pull Request information pull request to describe:
                 ## Pull Request Title: ${pullRequest.title}
