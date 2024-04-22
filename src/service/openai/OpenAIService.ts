@@ -31,8 +31,9 @@ export class OpenAIService {
     if (response.choices.length > 0) {
       try {
         console.log("RESPONSE: ", response.choices[0].message?.content);
-        return JSON.parse(response.choices[0].message?.content?.trim() || "")
+        const parsedJson  = JSON.parse(response.choices[0].message?.content?.trim() || "")
           .review as Array<ReviewComment>;
+        console.log("Parsed JSON: ", parsedJson);
       } catch (error) {
         throw new Error(`Error parsing response from OpenAI: ${error}`);
       }
