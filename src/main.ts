@@ -46,22 +46,21 @@ async function main() {
         pullRequest,
         prDiff,
       );
-      if (review) {
-        review.forEach((reviewComment) => {
-          console.log("Review Comment: ", reviewComment)
-          if (!file.to) {
-            console.log("File path not found")
-            return [];
-          }
-          console.log("File path: ", file.to)
-          console.log("Review Comment: ", reviewComment.comment)
-          comments.push({
-            path: file.to,
-            line: reviewComment.line,
-            body: reviewComment.comment,
-          });
+
+      review.forEach((reviewComment) => {
+        console.log("Review Comment: ", reviewComment)
+        if (!file.to) {
+          console.log("File path not found")
+          return [];
+        }
+        console.log("File path: ", file.to)
+        console.log("Review Comment: ", reviewComment.comment)
+        comments.push({
+          path: file.to,
+          line: reviewComment.line,
+          body: reviewComment.comment,
         });
-      }
+      });
     }
   }
 
