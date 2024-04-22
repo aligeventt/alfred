@@ -80,6 +80,9 @@ async function main() {
 
   console.log("Comments: ", comments);
   await githubService.createComment(owner, repo, number, comments);
+
+    const unitTest = await openAIService.createUnitTest("src/main.ts", "jest");
+    console.log("Unit Test: ", unitTest);
 }
 
 main().catch((error) => {

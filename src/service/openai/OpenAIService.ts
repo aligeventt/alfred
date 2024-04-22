@@ -40,6 +40,34 @@ export class OpenAIService {
     }
   };
 
+  createUnitTest = async (fileName: string, framework: string) => {
+    const prompt = this.unitTestPrompt(fileName, framework);
+    console.log("Prompt: ", prompt);
+    const response = await this.openAI.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      temperature: 0.2,
+      max_tokens: 700,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+      messages: [
+        {
+          role: "system",
+          content: prompt,
+        },
+      ],
+    });
+
+    if (response.choices.length > 0) {
+      try {
+        console.log("RESPONSE: ", response.choices[0].message?.content);
+        return response.choices[0].message?.content?.trim();
+      } catch (error) {
+        throw new Error(`Error parsing response from OpenAI: ${error}`);
+      }
+    }
+  }
+
   private prReviewPrompt = (pullRequest: any, diff: string) => {
     return `Create a pull request review for the following pull request:
                 Instructions:
@@ -64,4 +92,20 @@ export class OpenAIService {
                 \`\`\`
                 `;
   };
+
+  private unitTestPrompt = (fileName: string, framework: string): string => {
+    return `Generate a unit test with the ${framework} syntax for the following file: ${fileName}.
+          Instructions:
+            - Tests should be readable and easy to understand
+            - Tests should be concise and focused
+            - Tests should be independent and isolated
+            - Tests should be repeatable and consistent
+            - Follow Clean Code Principles
+            - Use the ${framework} syntax for the unit test
+            - Add relevant assertions and required packages in a single 'describe' block
+            - Add relevant test cases in 'it' blocks
+            - Add relevant setup and teardown code in 'beforeEach' and 'afterEach' blocks
+    `;
+
+  }
 }
