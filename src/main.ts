@@ -16,6 +16,7 @@ async function main() {
   const owner = repository.owner.login;
   const repo = repository.name;
   const pullRequest = await githubService.getPullRequest(owner, repo, number);
+  console.log("Pull Request: ", pullRequest)
 
   const parsedDiff = parseDiff(
     await githubService.getPullRequestDiff(owner, repo, number),
@@ -59,7 +60,14 @@ async function main() {
       }
     }
   }
-  await githubService.createComment(owner, repo, number, comments);
+  await githubService.createComment(owner, repo, number, comments).then(
+    () => {
+      console.log("Comment created successfully");
+    },
+    (error) => {
+      console.error("Error creating comment: ", error);
+    }
+  );
 }
 
 main().catch((error) => {
