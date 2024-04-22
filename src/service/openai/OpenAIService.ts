@@ -31,7 +31,7 @@ export class OpenAIService {
     if (response.choices.length > 0) {
       try {
         console.log("RESPONSE: ", response.choices[0].message?.content);
-        const parsedJson  = JSON.parse(response.choices[0].message?.content?.trim() || "") as Array<ReviewComment>;
+        const parsedJson  = JSON.parse(response.choices[0].message?.content?.trim() || "").review as Array<ReviewComment>;
         console.log("Parsed JSON: ", parsedJson);
         return parsedJson;
       } catch (error) {
@@ -43,12 +43,11 @@ export class OpenAIService {
   private prompt = (pullRequest: any, diff: string) => {
     return `Create a pull request review for the following pull request:
                 Instructions:
-                - Provide the response in following JSON format:  {[{"lineNumber": "1", "reviewComment": "This is a comment"}]}
+                - Provide the response in following JSON format:  {review: [{"lineNumber": "1", "reviewComment": "This is a comment"}]}
                 - Review the pull request
                 - Provide feedback
                 - Do not provide positive comments or positive feedback
                 - Provide constructive feedback
-                
                 - Follow Clean Code Principles
                 
                 Review the following pull request:
